@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTML5 Canvas</title>
+	</head>
+	<body>
+		<canvas id="draw" width="800" height="800"></canvas>
+		<script>
+			const canvas = document.querySelector("#draw");
+			// We draw on Canvas context and not directly on canvas
+			const canvasContext = canvas.getContext("2d");
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			canvasContext.strokeStyle = "#BADA55";
+			canvasContext.lineJoin = "round"; // How line meet another line should be
+			canvasContext.lineCap = "round"; // How end of line should be
+			canvasContext.lineWidth = 10;
+			let isDrawing = false; // Draw when mouse pressed
+			let lastX = 0;
+			let lastY = 0;
+			let hue = 0;
+			let changeDirection = true;
+
+			const draw = (e) => {
+				if (!isDrawing) return;
+				canvasContext.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+				canvasContext.beginPath();
+				// start from
+				canvasContext.moveTo(lastX, lastY);
+				// go to
+				canvasContext.lineTo(e.offsetX, e.offsetY);
+				canvasContext.stroke();
+				[lastX, lastY] = [e.offsetX, e.offsetY];
+
+				// Changing Colour
+				hue++;
+				if (hue == 360) hue = 0;
+
+				// Chanhing Width
+				if (
+					canvasContext.lineWidth >= 100 ||
+					canvasContext.lineWidth < 10
+				)
+					changeDirection = !changeDirection;
+
+				changeDirection
+					? canvasContext.lineWidth++
+					: canvasContext.lineWidth--;
+			};
+
+			canvas.addEventListener("mousemove", draw);
+			canvas.addEventListener("mousedown", (e) => {
+				isDrawing = true;
+				[lastX, lastY] = [e.offsetX, e.offsetY];
+			});
+			canvas.addEventListener("mouseup", () => (isDrawing = false));
+			canvas.addEventListener("mouseout", () => (isDrawing = false));
+		</script>
+		<style>
+			html,
+			body {
+				margin: 0;
+			}
+		</style>
+	</body>
+</html>
