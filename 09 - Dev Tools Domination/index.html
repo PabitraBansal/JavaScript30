@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Console Tricks!</title>
+	</head>
+	<body>
+		<p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+		<script>
+			const dogs = [
+				{ name: "Snickers", age: 2 },
+				{ name: "hugo", age: 8 },
+			];
+
+			function makeGreen() {
+				const p = document.querySelector("p");
+				p.style.color = "#BADA55";
+				p.style.fontSize = "50px";
+			}
+
+			// Regular
+			console.log("Hello");
+
+			// Interpolated
+			const name = "Pabitra Bansal";
+			console.log("Hi my name is %s", name);
+
+			// Styled
+			console.log("%c Hi my name is %s", "font-size:25px", name);
+
+			// warning!
+			console.warn("Warning!");
+
+			// Error :|
+			console.error("Error!!");
+
+			// Info
+			console.info("Danger");
+
+			// Testing
+			console.assert(1 == 2, "Wrong");
+
+			// clearing
+			// console.clear();
+
+			// Viewing DOM Elements
+			const p = document.querySelector("p");
+			console.log(p); // Only the tag
+			console.dir(p); // Complete with all functions and attributes
+
+			// Grouping together
+			dogs.forEach((dog) => {
+				console.groupCollapsed(`${dog.name}`);
+				console.log(`This is ${dog.name}`);
+				console.log(`${dog.name} is ${dog.age} years old`);
+				console.groupEnd(`${dog.name}`);
+			});
+
+			// counting
+			console.count("Wes");
+			console.count("Wes");
+			console.count("Steve");
+			console.count("Steve");
+			console.count("Wes");
+			console.count("Wes");
+			console.count("Steve");
+			console.count("Wes");
+			console.count("Steve");
+			console.count("Wes");
+			console.count("Wes");
+
+			// timing
+			console.time("fetching data");
+			for (var i = 0; i < 100; i++) console.log(i);
+			console.timeEnd("fetching data");
+
+			//create table from array of objects
+			console.table(dogs);
+		</script>
+	</body>
+</html>
