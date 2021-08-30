@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>JS Reference VS Copy</title>
+	</head>
+	<body>
+		<script>
+			// start with strings, numbers and booleans
+			let age = 100;
+			let age2 = age;
+			console.log(age, age2);
+			age2 = 150;
+			console.log(age, age2);
+
+			let name = "Pabitra";
+			let naam = name;
+			console.log(name, naam);
+			naam = "Bansal";
+			console.log(name, naam);
+			// Let's say we have an array
+			const players = ["Wes", "Sarah", "Ryan", "Poppy"];
+
+			// and we want to make a copy of it.
+			const team = players;
+			console.log(team);
+
+			// You might think we can just do something like this:
+			team[3] = "Ron";
+
+			// however what happens when we update that array?
+			console.log(team);
+			console.log(players);
+
+			// now here is the problem!
+			console.log(team === players);
+
+			// oh no - we have edited the original array too!
+			// Why? It's because that is an array reference, not an array copy. They both point to the same array!
+
+			// So, how do we fix this? We take a copy instead!
+			// one way
+			team2 = players.slice();
+			console.log(team2 === players);
+
+			// or create a new array and concat the old one in
+			team3 = [].concat(players);
+
+			// or use the new ES6 Spread
+			tream4 = [...players];
+
+			// now when we update it, the original one isn't changed
+
+			// The same thing goes for objects, let's say we have a person object
+
+			// with Objects
+			const person = {
+				name: "Wes Bos",
+				age: 80,
+			};
+
+			// and think we make a copy:
+			const captain = person;
+			captain.name = "Pabitra Bansal";
+			console.log(person);
+
+			// how do we take a copy instead?
+			const cap2 = Object.assign({}, person, { number: 99 });
+			console.log(cap2);
+			console.log(person);
+
+			// We will hopefully soon see the object ...spread
+
+			// Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+			const wes = {
+				name: "Wes",
+				age: 100,
+				social: {
+					twitter: "@wesbos",
+					facebook: "wesbos.developer",
+				},
+			};
+
+			// This will create a deep copy.
+			const dev2 = JSON.parse(JSON.stringify(wes));
+		</script>
+	</body>
+</html>
